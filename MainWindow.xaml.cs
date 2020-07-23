@@ -14,7 +14,7 @@ namespace Hangman
     /// </summary>
     public partial class MainWindow : Window
     {
-        string[] Dictionary = File.ReadAllLines("words_alpha.txt");
+        string[] Dictionary = new string[] { };
         string pickedWord;
         string obsWord;
         string guessedLetters;
@@ -36,12 +36,25 @@ namespace Hangman
             stage = 0;
             if (easyDiff.IsChecked == true)
             {
-                Dictionary = File.ReadAllLines("easy.txt");
+                try
+                {
+                    Dictionary = File.ReadAllLines("easy.txt");
+                }
+                catch (IOException e){
+                    Console.WriteLine("Error reading file: " + e.Message);                    
+                }
                 difficulty = "easy";
             }
             else if (hardDiff.IsChecked == true)
             {
-                Dictionary = File.ReadAllLines("words_alpha.txt");
+                try
+                {
+                    Dictionary = File.ReadAllLines("words_alpha.txt");
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine("Error reading file: " + e.Message);
+                }
                 difficulty = "hard";
             }
             PickWord();
